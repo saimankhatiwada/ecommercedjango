@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    'meropasal.apps.MeropasalConfig'
     
 ]
 
@@ -63,7 +64,7 @@ TAILWIND_APP_NAME = 'theme'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "theme/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
