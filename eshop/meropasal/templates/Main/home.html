@@ -1,1 +1,143 @@
-{%  extends 'theme/base.html'  %}
+{%  extends 'Main/body.html'  %}
+
+{% block content %}
+{% load static %}
+<section class="bg-white py-12">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold mb-6">Welcome to Mero Pasal - Your One-Stop Online Store!</h1>
+        
+        <p class="text-lg text-gray-700 mb-6">
+            Discover a world of convenience and endless choices at Mero Pasal, your premier online shopping destination. Whether you're looking for groceries, fashionable clothing, or top-quality electric appliances, we have everything you need, right at your fingertips. With our user-friendly interface and hassle-free shopping experience, we aim to make your online shopping journey an absolute delight.
+        </p>
+        
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
+                <div class="bg-gray-200 p-6 rounded-lg">
+                    <div class="aspect-w-3 aspect-h-2">
+                        <img src="{% static 'Home/Coca_Cola.jpg' %}" alt="Product Image" class="object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Coca Cola</h3>
+                    <p class="text-gray-700">
+                        Coca Cola is a world-famous carbonated soft drink known for its refreshing taste and iconic branding. Made with a secret recipe that has been cherished for decades, Coca Cola provides a unique and satisfying beverage experience.
+                        <br>
+                        <br>
+                        Key Features:
+                        <ul class="list-disc pl-6">
+                            <li>Classic cola flavor loved by millions worldwide</li>
+                            <li>Effervescent bubbles for a lively and invigorating sensation</li>
+                            <li>Perfectly balanced sweetness that quenches your thirst</li>
+                            <li>Versatile beverage suitable for various occasions</li>
+                            <li>Available in different sizes and packaging options</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
+                <div class="bg-gray-200 p-6 rounded-lg">
+                    <div class="aspect-w-3 aspect-h-2">
+                        <img src="{% static 'Home/fujiflim_camera.jpg' %}" alt="Product Image" class="object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">FujiFlim</h3>
+                    <p class="text-gray-700">
+                        The FujiFlim camera is a high-quality digital camera that captures stunning photos with exceptional clarity and detail. Whether you're a professional photographer or an enthusiastic hobbyist, this camera is perfect for capturing life's precious moments.
+                        <br>
+                        <br>
+                        Key Features:
+                        <ul class="list-disc pl-6">
+                            <li>High-resolution sensor for sharp and vibrant images</li>
+                            <li>Wide range of shooting modes and creative filters</li>
+                            <li>Advanced autofocus system for quick and accurate focusing</li>
+                            <li>Built-in Wi-Fi for easy sharing and remote control</li>
+                            <li>Durable construction for reliable performance in various conditions</li>
+                        </ul>
+                    </p>                    
+                </div>
+            </div>
+            
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
+                <div class="bg-gray-200 p-6 rounded-lg">
+                    <div class="aspect-w-3 aspect-h-2">
+                        <img src="{% static 'Home/mushroom.jpg' %}" alt="Product Image" class="object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Puffballs</h3>
+                    <p class="text-gray-700">
+                        Puffballs are a type of edible mushroom known for their unique shape and texture. These mushrooms have a delicate flavor and a soft, spongy interior. They can be used in a variety of culinary preparations, including sautéing, grilling, or adding to soups and stews.
+                        <br>
+                        <br>
+                        Key Features:
+                        <ul class="list-disc pl-6">
+                            <li>Fresh and locally sourced puffballs for optimal quality</li>
+                            <li>Tender and succulent texture that melts in your mouth</li>
+                            <li>Versatile ingredient for various culinary creations</li>
+                            <li>Nutrient-rich and low in calories</li>
+                            <li>Excellent source of dietary fiber and antioxidants</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
+                <div class="bg-gray-200 p-6 rounded-lg">
+                    <div class="aspect-w-3 aspect-h-2">
+                        <img src="{% static 'Home/pasta.jpg' %}" alt="Product Image" class="object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Farfalle</h3>
+                    <p class="text-gray-700">
+                        Farfalle, also known as bow-tie pasta, is a versatile and visually appealing pasta variety. With its unique shape, farfalle adds a touch of elegance to any pasta dish. It has a firm texture that holds sauces well, making it ideal for a range of recipes.
+                        <br>
+                        <br>
+                        Key Features:
+                        <ul class="list-disc pl-6">
+                            <li>Premium quality farfalle pasta for a delightful dining experience</li>
+                            <li>Distinctive bow-tie shape that adds visual appeal to your dishes</li>
+                            <li>Firm texture that holds sauces and ingredients perfectly</li>
+                            <li>Versatile pasta suitable for various recipes and cuisines</li>
+                            <li>Quick and easy to cook for convenience in the kitchen</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+        <div class="text-center mt-8">
+            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg">Explore Our Products</a>
+        </div>
+    </div>
+</section>
+
+
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-6">Why Choose Mero Pasal?</h2>
+        
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Extensive Product Range</h3>
+                    <p class="text-gray-700">At Mero Pasal, we take pride in offering an extensive range of products to cater to your every need. From fresh produce and pantry essentials to trendy apparel and cutting-edge appliances, we've got you covered.</p>
+                </div>
+            </div>
+            
+            <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Convenient Online Shopping</h3>
+                    <p class="text-gray-700">With Mero Pasal, you can enjoy the convenience of online shopping from the comfort of your home. Browse through our website or mobile app, place orders with ease, and have them delivered to your doorstep in no time.</p>
+                </div>
+            </div>
+            
+            <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Quality Assurance</h3>
+                    <p class="text-gray-700">We understand the importance of quality when it comes to products. That's why we partner with trusted brands and suppliers to ensure that every item you purchase from Mero Pasal meets the highest standards of quality and reliability.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
