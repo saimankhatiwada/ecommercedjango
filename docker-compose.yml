@@ -1,0 +1,52 @@
+version: '3.8'
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/16
+
+services:
+  db:
+    image: postgres
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=9d9dfbfbfdfd@S
+      - POSTGRES_DB=eshop
+    restart: always
+    networks:
+      app-network:
+        ipv4_address: 172.16.0.2
+        aliases:
+          - db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python eshop/manage.py makemigrations && python eshop/manage.py migrate && python eshop/manage.py tailwind start && python eshop/manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5433
+      - DB_NAME=eshop
+      - DB_USER=saiman
+      - DB_PASSWORD=9d9dfbfbfdfd@S
+    restart: always
+    networks:
+      app-network:
+    volumes:
+      - .:/code
+
+volumes:
+  postgres_data:

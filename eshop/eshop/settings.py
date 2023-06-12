@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ptp&$0*qc%w@a9=c^i_kk)v)h1kb7v$8(((g#cjt^+59onhyrv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,9 +86,13 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "eshop",
+        "USER": "root",
+        "PASSWORD": "9d9dfbfbfdfd@S",
+        "HOST": "db",
+        "PORT": 5432
     }
 }
 

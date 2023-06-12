@@ -5,8 +5,9 @@
 {% block tittle %}Mero Pasal: Products{% endblock tittle %}
 
 {% block content %}
-  {% if product_list %}
-    <div class="bg-white py-12 mt-16">
+  
+  <div class="bg-white py-12 mt-16">
+    {% if product_list %}
       <div class="flex flex-wrap -mx-4">
         <div class="container mx-auto px-4">
           <div class="flex justify-between mb-8">
@@ -18,7 +19,7 @@
                     <div class="aspect-w-3 aspect-h-2">
                       <img src="{% static  'products/'|add:product.product_img_name %}" alt="Product Image" class="object-cover h-64">
                     </div>
-                    <div class="p-4 flex flex-col justify-between h-full">
+                    <div class="p-4 flex flex-col justify-between">
                       <h3 class="text-lg font-bold mb-2 text-center">{{ product.name }}</h3>
                       <div class="flex flex-wrap justify-between items-center">
                         <div>
@@ -30,12 +31,12 @@
                       <div class="mt-8"></div>
                       <div class="flex justify-between mt-auto">
                         <div>
-                          <a href="{% url 'meropasal:product' product.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">View Details</a>
+                          <a href="{% url 'meropasal:product_detail' product.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">View Details</a>
                         </div>
                         <div>
                           <a href="{% url 'meropasal:product' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">Buy</a>
                         </div>
-                      </div>                      
+                      </div>                       
                     </div>
                   </div>
                 </div>
@@ -45,8 +46,9 @@
           </div>
         </div>
       </div>
-    </div>
-  {% else %}
-    <p>No products are available.</p>
-  {% endif %}
+    {% else %}
+      <p class="text-3xl text-center">No products are available.</p>
+    {% endif %}
+  </div>
+  
 {% endblock content %}

@@ -1,0 +1,63 @@
+{% extends 'Main/body.html' %}
+
+{% load static %}
+
+{% block tittle %}Mero Pasal: Contact Us{% endblock tittle %}
+
+{% block content %}
+    <div class="bg-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center mt-10">
+                <div class="max-w-screen-md bg-gray-100 rounded-lg shadow-lg p-8">
+                    <h1 class="text-3xl font-bold mb-6 text-gray-900">Contact Us</h1>
+                    <form action="{% url 'meropasal:contactus' %}" method="post">
+                        {% csrf_token %} 
+                        <div class="mb-6">
+                            <label for="contact_name" class="block text-sm font-semibold text-gray-800 mb-2">Name</label>
+                            <input type="text" id="contact_name" name="contact_name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 shadow-inner placeholder-gray-400" placeholder="Enter your name" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="contatc_email" class="block text-sm font-semibold text-gray-800 mb-2">Email</label>
+                            <input type="email" id="contatc_email" name="contatc_email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 shadow-inner placeholder-gray-400" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="contact_message" class="block text-sm font-semibold text-gray-800 mb-2">Message</label>
+                            <textarea id="contact_message" name="contact_message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 shadow-inner placeholder-gray-400" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow">Submit</button>
+                        </div>
+                    </form>
+                    <div class="mt-6">
+                        <ul class="mt-4 text-gray-600 flex flex-col space-y-2">
+                            <li class="flex items-center">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.6673 8.00004C14.667 6.23204 13.9645 4.53655 12.7143 3.28639C11.4641 2.03622 9.76865 1.33373 8.00065 1.33337V2.66671C9.05538 2.66695 10.0864 2.9798 10.9634 3.56573C11.8404 4.15167 12.524 4.98439 12.928 5.95871C13.1961 6.60589 13.334 7.29954 13.334 8.00004H14.6673ZM1.33398 6.66671V3.33337C1.33398 3.15656 1.40422 2.98699 1.52925 2.86197C1.65427 2.73695 1.82384 2.66671 2.00065 2.66671H5.33398C5.5108 2.66671 5.68036 2.73695 5.80539 2.86197C5.93041 2.98699 6.00065 3.15656 6.00065 3.33337V6.00004C6.00065 6.17685 5.93041 6.34642 5.80539 6.47144C5.68036 6.59647 5.5108 6.66671 5.33398 6.66671H4.00065C4.00065 8.08119 4.56255 9.43775 5.56275 10.4379C6.56294 11.4381 7.9195 12 9.33398 12V10.6667C9.33398 10.4899 9.40422 10.3203 9.52925 10.1953C9.65427 10.0703 9.82384 10 10.0007 10H12.6673C12.8441 10 13.0137 10.0703 13.1387 10.1953C13.2637 10.3203 13.334 10.4899 13.334 10.6667V14C13.334 14.1769 13.2637 14.3464 13.1387 14.4714C13.0137 14.5965 12.8441 14.6667 12.6673 14.6667H9.33398C4.91598 14.6667 1.33398 11.0847 1.33398 6.66671Z" fill="#1E293B"/>
+                                    <path d="M11.6953 6.46933C11.8966 6.95455 12.0001 7.47471 12 8H10.8C10.8001 7.63227 10.7277 7.26813 10.587 6.92838C10.4464 6.58863 10.2401 6.27993 9.98009 6.01991C9.72007 5.75988 9.41137 5.55364 9.07162 5.41296C8.73187 5.27228 8.36773 5.19991 8 5.2V4C8.7911 4.00004 9.56443 4.23466 10.2222 4.6742C10.8799 5.11374 11.3926 5.73845 11.6953 6.46933Z" fill="#1E293B"/>
+                                </svg> 
+                                <span>&nbsp;+977 9862884166</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_398_1681)">
+                                    <path d="M3.63637 15.9213V7.7215L1.71919 5.39503L0 4.104V14.4742C0 15.2749 0.489062 15.9213 1.09094 15.9213H3.63637Z" fill="#4285F4"/>
+                                    <path d="M12.3633 15.9212H14.9087C15.5124 15.9212 15.9997 15.2724 15.9997 14.4742V4.104L14.0524 5.58272L12.3633 7.72141V15.9212Z" fill="#34A853"/>
+                                    <path d="M3.63587 7.72139L3.375 4.5175L3.63587 1.45105L7.9995 5.79211L12.3631 1.45105L12.6549 4.35194L12.3631 7.72139L7.9995 12.0624L3.63587 7.72139Z" fill="#EA4335"/>
+                                    <path d="M12.3633 1.45108V7.72142L15.9997 4.10393V2.17457C15.9997 0.385135 14.4597 -0.634969 13.3815 0.438192L12.3633 1.45108Z" fill="#FBBC04"/>
+                                    <path d="M0 4.10397L1.67244 5.76781L3.63637 7.72146V1.45112L2.61812 0.43823C1.53812 -0.635014 0 0.385173 0 2.17452V4.10389V4.10397Z" fill="#C5221F"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_398_1681">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                    </defs>
+                                </svg>
+                                <span>&nbsp;saimankhatiwada@cagtu.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
