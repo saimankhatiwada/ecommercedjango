@@ -4,7 +4,7 @@ from django.views import generic
 from django.db import IntegrityError
 from django.urls import reverse
 
-from .models import Product, ContactUs
+from .models import Product, ContactUs, Blogs
 
 def home(request):
     return render(request, "Main/home.html")
@@ -16,10 +16,22 @@ class IndexProductView(generic.ListView):
     
     def get_queryset(self):
         return Product.objects.all()
-
+    
 class DetailProductView(generic.DetailView):
     model = Product
     template_name = "Product/productsdetail.html"
+    
+class IndexBlogView(generic.ListView):
+    template_name = "Blog/blogs.html"
+    context_object_name = "blog_list"
+    
+    def get_queryset(self):
+        return Blogs.objects.all()
+    
+class DetailBlogView(generic.DetailView):
+    model = Blogs
+    template_name = "Blog/blogsdetail.html"
+
 
 
 def contactus(request):

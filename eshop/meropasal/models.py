@@ -7,12 +7,12 @@ from uuid import uuid4
 def get_product_image_path(instance, filename) -> str:
     file_extension = os.path.splitext(filename)[1]
     unique_filename = f'{instance.id}{file_extension}'
-    return os.path.join('meropasal', 'static', 'products', unique_filename)
+    return os.path.join('eshop', 'meropasal', 'static', 'products', unique_filename)
 
 def get_blog_image_path(instance, filename) -> str:
     file_extension = os.path.splitext(filename)[1]
     unique_filename = f'{instance.id}{file_extension}'
-    return os.path.join('meropasal', 'static', 'blogs', unique_filename)
+    return os.path.join('eshop', 'meropasal', 'static', 'blogs', unique_filename)
 
 def validate_image_file_extension(value) -> Exception | None:
     if not value.name.endswith('.jpg'):
@@ -32,7 +32,7 @@ class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField("Name", max_length=100)
     description = models.TextField("Description", max_length=1000)
-    product_img_url = models.ImageField("Product image", upload_to=get_product_image_path, validators=[validate_image_file_extension])
+    product_img_url = models.ImageField("Product image",upload_to=get_product_image_path, validators=[validate_image_file_extension])
     product_img_name = models.CharField(max_length=100, unique=True, blank= True, null=True, editable=False)
     price = models.DecimalField("Price", max_digits=10, decimal_places=2)
     stock = models.IntegerField("Stock", null=True)
@@ -65,12 +65,14 @@ class ContactUs(models.Model):
         return self.contact_name
     
     
+
+    
 class Blogs(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    blog_name = models.CharField("Name", max_length=100)
-    blog_description = models.TextField("Description", max_length=1000)
+    blog_name = models.CharField("Name", max_length=300)
+    blog_description = models.TextField("Description", max_length=2000)
     blog_img_url = models.ImageField("Blog image", upload_to=get_blog_image_path, validators=[validate_image_file_extension])
-    blog_img_name = models.CharField(max_length=100, unique=True, blank= True, null=True, editable=False)
+    blog_img_name = models.CharField(max_length=200, unique=True, blank= True, null=True, editable=False)
     created_date = models.DateTimeField("Created date",auto_now_add=True)
     updated_date = models.DateTimeField("Updated date", auto_now=True)
     
@@ -86,3 +88,13 @@ class Blogs(models.Model):
     
     def __str__(self) -> str:
         return self.blog_name
+    
+
+class KeyFeatures(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    blog = models.ForeignKey(Blogs, on_delete=models.CASCADE)
+    features = models.TextField(max_length=1000)
+    
+    def __str__(self) -> str:
+        return self.features
+    
