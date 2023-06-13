@@ -15,8 +15,8 @@ def get_blog_image_path(instance, filename) -> str:
     return os.path.join('eshop', 'meropasal', 'static', 'blogs', unique_filename)
 
 def validate_image_file_extension(value) -> Exception | None:
-    if not value.name.endswith('.jpg'):
-        raise ValidationError("Only JPEG files are allowed.")
+    if not value.name.endswith('.jpg' or '.png'):
+        raise ValidationError("Only JPEG or PNG files are allowed.")
 
 
 class Category(models.Model):
@@ -77,6 +77,16 @@ class Blogs(models.Model):
     updated_date = models.DateTimeField("Updated date", auto_now=True)
     
     def save(self, *args, **kwargs):
+        if self.pk: 
+            try:
+                old_instance = Blogs.objects.get(pk=self.pk)
+                if old_instance.blog_img_url != self.blog_img_url: 
+                    if old_instance.blog_img_url:
+                        if os.path.exists(old_instance.blog_img_url.path):
+                            os.remove(old_instance.blog_img_url.path)
+            except Blogs.DoesNotExist:
+                pass
+
         self.blog_img_name = f"{self.id}.jpg"
         super().save(*args, **kwargs)
         

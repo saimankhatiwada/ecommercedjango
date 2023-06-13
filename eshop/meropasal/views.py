@@ -4,7 +4,8 @@ from django.views import generic
 from django.db import IntegrityError
 from django.urls import reverse
 
-from .models import Product, ContactUs, Blogs
+
+from .models import Product, ContactUs, Blogs, KeyFeatures
 
 def home(request):
     return render(request, "Main/home.html")
@@ -21,6 +22,11 @@ class DetailProductView(generic.DetailView):
     model = Product
     template_name = "Product/productsdetail.html"
     
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        context['product'] = self.get_object()
+        return context
+    
 class IndexBlogView(generic.ListView):
     template_name = "Blog/blogs.html"
     context_object_name = "blog_list"
@@ -31,6 +37,14 @@ class IndexBlogView(generic.ListView):
 class DetailBlogView(generic.DetailView):
     model = Blogs
     template_name = "Blog/blogsdetail.html"
+    
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        blog = self.get_object()
+        key_features = KeyFeatures.objects.filter(blog=blog)
+        context['blog'] = blog
+        context['key_feature_list'] = key_features
+        return context
 
 
 
