@@ -1,0 +1,54 @@
+{% extends 'Main/body.html' %}
+
+{% load static %}
+
+{% block title %}Mero Pasal: Shopping Cart{% endblock title %}
+
+{% block content %}
+
+
+<div class="bg-white py-12 mt-16">
+    <div class="max-w-3xl mx-auto">
+        {% if cart %}
+            <table class="min-w-full bg-gray-100 mx-auto">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 border-b border-gray-500">Image</th>
+                        <th class="px-6 py-3 border-b border-gray-500">Product</th>
+                        <th class="px-6 py-3 border-b border-gray-500">Quantity</th>
+                        <th class="px-6 py-3 border-b border-gray-500">Price</th>
+                        <th class="px-6 py-3 border-b border-gray-500">Total</th>
+                        <th class="px-6 py-3 border-b border-gray-500">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td class="px-6 py-4">
+                                <img src="{% static 'products/'|add:item.product.product_img_name %}" alt="{{ item.product.name }}" class="w-16 h-16 object-cover rounded-full">
+                            </td>
+                            
+                            <td class="px-6 py-4">
+                                {{ item.product.name }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ item.count }}
+                            </td>
+                            <td class="px-6 py-4">
+                                &#x20a8; &nbsp;{{ item.product.price }}
+                            </td>
+                            <td class="px-6 py-4">
+                                &#x20a8; &nbsp;{{ item.get_product_total_price }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-2xl text-center text-gray-500">Your shopping cart is empty.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,7 +1,7 @@
 import os
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import User
 from uuid import uuid4
 
 def get_product_image_path(instance, filename) -> str:
@@ -41,6 +41,16 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     def save(self, *args, **kwargs):
+        if self.pk: 
+            try:
+                old_instance = Product.objects.get(pk=self.pk)
+                if old_instance.product_img_url != self.product_img_url: 
+                    if old_instance.product_img_url:
+                        if os.path.exists(old_instance.product_img_url.path):
+                            os.remove(old_instance.product_img_url.path)
+            except Product.DoesNotExist:
+                pass
+
         self.product_img_name = f"{self.id}.jpg"
         super().save(*args, **kwargs)
         
@@ -108,3 +118,27 @@ class KeyFeatures(models.Model):
     def __str__(self) -> str:
         return self.features
     
+    
+class Cart(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_paid = models.BooleanField("Is paid", default=False)
+    
+    
+
+class CartItems(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    cart =  models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product =  models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    count = models.IntegerField("Count", default=1)
+    
+    
+    def get_product_total_price(self):
+        if self.count > 1:
+            return self.count * self.product.price
+
+        if self.count == 1:
+            return self.product.price
+
+        return 0
+

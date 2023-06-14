@@ -1,0 +1,60 @@
+{% extends 'Main/body.html' %}
+
+{% load static %}
+
+{% block tittle %}Mero Pasal: Register{% endblock tittle %}
+
+{% block content %}
+
+<div class="bg-white py-12 mt-16">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-center mt-10">
+            <div class="max-w-screen-md flex flex-col items-center bg-gray-100 rounded-lg shadow-lg p-8 mb-8">
+                <div class="w-full max-w-md">
+                    <div class="bg-white shadow-md rounded-lg px-8 py-6 mb-4">
+                        <form action="{% url 'meropasal:register' %}" method="post">
+                            {% csrf_token %}
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                                    Username
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Enter your username" value= {{ username }}>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                                    Email
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Enter your email" value={{ email }}>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                                    Password
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Enter your password">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="confirm-password">
+                                    Confirm Password
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="confirm-password" name="confirm_password" type="password" placeholder="Confirm your password">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow">Register</button>
+                            </div>
+                        </form>
+                        {% if error_message %}
+                        <div class="mt-4 text-red-500">
+                            {{ error_message }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <p class="text-center text-gray-500 text-xs">
+                        &copy; {{ current_year }} Mero Pasal. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
