@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+import json
+from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.db import IntegrityError
@@ -8,8 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
-from .models import Product, ContactUs, Blogs, KeyFeatures, Cart, CartItems
-
+from .models import Product, ContactUs, Blogs, KeyFeatures, Cart, CartItems, KhaltiPaymentStatus
+import requests
 
 
 
@@ -124,9 +125,15 @@ def shopping_cart(request):
         user = request.user
         cart = Cart.objects.get(user=user)
         cart_items = CartItems.objects.filter(cart=cart)
+        grand_total = 0
+        
+        for item in cart_items:
+            grand_total += item.get_product_total_price()
+            
         context = {
             'cart': cart,
-            'cart_items': cart_items
+            'cart_items': cart_items,
+            'cart_grand_total': grand_total
         }
         
         return render(request, "Carts/cart.html", context)
@@ -136,6 +143,101 @@ def shopping_cart(request):
     return render(request, "Carts/cart.html")
     
 
+def increase_cart_item_count(request, item_id):
+    try:
+        item = CartItems.objects.get(id=item_id)
+        item.count += 1
+        item.save()
+        return HttpResponseRedirect(reverse("meropasal:cart"))
+    except CartItems.DoesNotExist:
+        return HttpResponseRedirect(reverse("meropasal:cart"))
+    
+    
+def deacrease_cart_item_count(request, item_id):
+    try:
+        item = get_object_or_404(CartItems, id=item_id)
+        if item.count <= 1:
+            item.delete()
+        else:
+            item.count -= 1
+            item.save()
+        return HttpResponseRedirect(reverse("meropasal:cart"))
+    
+    except CartItems.DoesNotExist:
+        return HttpResponseRedirect(reverse("meropasal:cart"))
+
+
+def khalti_checkout(request):
+    
+    user = request.user
+    cart_shopping = Cart.objects.get(user=user)
+    cart_items = CartItems.objects.filter(cart=cart_shopping)
+    grand_total = 0
+    
+    for item in cart_items:
+        grand_total += item.get_product_total_price()
+        
+    amount = grand_total
+    
+    headers = {
+        'Authorization': "Key 6531a9fd7d54409c9ae878687dd27dae",
+        'Content-Type': 'application/json'
+    }
+    
+    url = "https://a.khalti.com/api/v2/epayment/initiate/"
+    
+    data = {
+        "return_url": "http://0.0.0.0:8000/khalticheckout/verify",
+        "website_url": "http://0.0.0.0:8000",
+        "amount": amount * 100,
+        "purchase_order_id": f"{cart_shopping.id}",
+        "purchase_order_name": f"{cart_shopping.user.username}",
+        "customer_info": {
+            "name": cart_shopping.user.username,
+            "email": cart_shopping.user.email,
+            "phone": "9811496763"
+        }
+    }
+    json_data = json.dumps(data, default=str)
+    response = requests.post(url,headers=headers,data=json_data)
+    response_data = response.json()
+    khalti_payment_status = KhaltiPaymentStatus(
+        pidx = response_data['pidx'],
+        user = cart_shopping.user,
+        cart = cart_shopping 
+    )
+    khalti_payment_status.save()
+    return HttpResponseRedirect(response_data['payment_url'])
+    
+    
+def khalti_checkout_verify(request):
+    user = request.user
+    cart_shopping = Cart.objects.get(user=user)
+    payment_status = get_object_or_404(KhaltiPaymentStatus, user=user)
+    headers = {
+        'Authorization': "Key 6531a9fd7d54409c9ae878687dd27dae",
+        'Content-Type': 'application/json'
+    }
+    url = "https://a.khalti.com/api/v2/epayment/lookup/"
+    
+    data = {
+        "pidx": f"{payment_status.pidx}",
+    }
+    
+    json_data = json.dumps(data, default=str)
+    response = requests.post(url,headers=headers,data=json_data)
+    response_data = response.json()
+    
+    if response_data['status'] == "Completed":
+        payment_status.delete()
+        cart_shopping.delete()
+        return HttpResponseRedirect(reverse("meropasal:product"))
+    
+    else:
+        payment_status.delete()
+        return HttpResponseRedirect(reverse("meropasal:cart"))
+        
+        
 
 class IndexProductView(generic.ListView):
     template_name = "Product/products.html"

@@ -142,3 +142,10 @@ class CartItems(models.Model):
 
         return 0
 
+
+class KhaltiPaymentStatus(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    pidx = models.CharField("Pidx", max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    cart =  models.ForeignKey(Cart, on_delete=models.SET_NULL, null=True, blank=True)
+    

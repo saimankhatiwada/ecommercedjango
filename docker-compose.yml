@@ -31,7 +31,8 @@ services:
       context: .
       dockerfile: Dockerfile
     command: >
-      sh -c "python eshop/manage.py makemigrations && python eshop/manage.py migrate && python eshop/manage.py createsuperuser && python eshop/manage.py tailwind start && python eshop/manage.py runserver 0.0.0.0:8000"
+      sh -c "cd eshop/theme/static_src && npm run dev && \
+      cd ../../.. && python eshop/manage.py makemigrations && python eshop/manage.py migrate && python eshop/manage.py createsuperuser && python eshop/manage.py runserver 0.0.0.0:8000 "
     ports:
       - '8000:8000'
     depends_on:
